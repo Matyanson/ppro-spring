@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+</head>
+<body>
+    <a th:href="@{'/create'}">New Car</a>
+  <ul>
+      <li th:each="car, iter: ${cars}">
+          <a th:href="@{'/detail/' + ${iter.index}}">
+              <span th:text="${car.spz}"></span>
+          </a>
+      </li>
+  </ul>
+
+</body>
+</html>
