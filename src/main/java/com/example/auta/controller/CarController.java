@@ -25,7 +25,7 @@ public class CarController {
         return "list";
     }
 
-    @GetMapping("/detail/index")
+    @GetMapping("/detail/{index}")
     public String detail(Model model, @PathVariable int index) {
         if(index < 0 || index >= cars.size()) return "redirect:/";
 
@@ -33,6 +33,32 @@ public class CarController {
 
         model.addAttribute("car", car);
         return "detail";
+    }
+
+    @GetMapping("/delete/{index}")
+    public String delete(@PathVariable int index) {
+        if(index < 0 || index >= cars.size()) return "redirect:/";
+
+        cars.remove(index);
+        return "delete";
+    }
+
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("car", new Car());
+        model.addAttribute("edit", false);
+        return "edit";
+    }
+
+    @GetMapping("/edit/{index}")
+    public String edit(Model model, @PathVariable int index) {
+        if(index < 0 || index >= cars.size()) return "redirect:/";
+
+        Car car = cars.get(index);
+        car.setId(index);
+        model.addAttribute("car", new Car());
+        model.addAttribute("edit", false);
+        return "edit";
     }
 
 }
