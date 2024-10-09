@@ -5,12 +5,15 @@
     <title>Edit</title>
 </head>
 <body>
-  <form action="@{'/save'}" method="post" th:object="${car}">
+  <form th:action="@{'/save'}" method="post" th:object="${car}">
+      <input type="hidden" th:fielf="*{getId()}">
     SPZ: <input type="text" th:field="*{spz}"><br>
     Color: <input type="text" th:field="*{color}"><br>
     model: <input type="text" th:field="*{model}"><br>
     Tank volume: <input type="number" th:field="*{tankVolume}"><br>
     Number of seats: <input type="number" th:field="*{numberOfSeats}"><br>
+
+      <input type="submit" />
   </form>
 </body>
 </html>
