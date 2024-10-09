@@ -1,6 +1,8 @@
 package com.example.auta.controller;
 
 import com.example.auta.model.Car;
+import com.example.auta.service.CarService;
+import com.example.auta.service.CarServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,27 +13,23 @@ import java.util.List;
 
 @Controller
 public class CarController {
-    List<Car> cars = new ArrayList<>();
+    CarService carService;
+
+    public CarController(CarService carService) {
+        this.carService = carService;
+    }
 
     @GetMapping("/")
     public String list(Model model) {
-        cars.add(new Car(
-                "ABC",
-                "blue",
-                "Z",
-                20.5f,
-                5
-        ));
 
-        model.addAttribute("cars", cars);
+        model.addAttribute("cars", carService.getAllCars());
         return "list";
     }
 
     @GetMapping("/detail/{index}")
     public String detail(Model model, @PathVariable int index) {
-        if(index < 0 || index >= cars.size()) return "redirect:/";
-
-        Car car = cars.get(index);
+        Car car = carService.getCarById(index);
+        if(car == null) return "redirect:/";
 
         model.addAttribute("car", car);
         return "detail";
@@ -39,9 +37,9 @@ public class CarController {
 
     @GetMapping("/delete/{index}")
     public String delete(@PathVariable int index) {
-        if(index < 0 || index >= cars.size()) return "redirect:/";
+        if(index < 0 || index >= carService.getAllCars().size()) return "redirect:/";
 
-        cars.remove(index);
+        carService.getAllCars().remove(index);
         return "delete";
     }
 
@@ -54,9 +52,9 @@ public class CarController {
 
     @GetMapping("/edit/{index}")
     public String edit(Model model, @PathVariable int index) {
-        if(index < 0 || index >= cars.size()) return "redirect:/";
+        if(index < 0 || index >= carService.getAllCars().size()) return "redirect:/";
 
-        Car car = cars.get(index);
+        Car car = carService.getAllCars().get(index);
         car.setId(index);
         model.addAttribute("car", new Car());
         model.addAttribute("edit", false);
