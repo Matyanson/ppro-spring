@@ -8,8 +8,8 @@ import java.util.List;
 
 @Service
 public interface CarService {
-    ArrayList<Car> getAllCars();
-    public Car getCarById(int id);
+    List<Car> getAllCars();
+    public Car getCarById(long id);
     public void saveCar(Car car);
 
 }

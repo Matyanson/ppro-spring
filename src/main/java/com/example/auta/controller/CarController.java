@@ -23,21 +23,21 @@ public class CarController {
         return "car_list";
     }
 
-    @GetMapping("/detail/{index}")
-    public String detail(Model model, @PathVariable int index) {
-        Car car = carService.getCarById(index);
+    @GetMapping("/detail/{id}")
+    public String detail(Model model, @PathVariable long id) {
+        Car car = carService.getCarById(id);
         if(car == null) return "redirect:/cars/";
 
         model.addAttribute("car", car);
         return "car_detail";
     }
 
-    @GetMapping("/delete/{index}")
+    @GetMapping("/delete/{id}")
     @RequestMapping("/cars")
-    public String delete(@PathVariable int index) {
-        if(index < 0 || index >= carService.getAllCars().size()) return "redirect:/cars/";
+    public String delete(@PathVariable long id) {
+        if(id < 0 || id >= carService.getAllCars().size()) return "redirect:/cars/";
 
-        carService.getAllCars().remove(index);
+        carService.getAllCars().remove(id);
         return "delete";
     }
 
@@ -58,12 +58,11 @@ public class CarController {
         return "redirect:/cars/";
     }
 
-    @GetMapping("/edit/{index}")
-    public String edit(Model model, @PathVariable int index) {
-        if(index < 0 || index >= carService.getAllCars().size()) return "redirect:/cars/";
+    @GetMapping("/edit/{id}")
+    public String edit(Model model, @PathVariable long id) {
+        if(id < 0 || id >= carService.getAllCars().size()) return "redirect:/cars/";
 
-        Car car = carService.getAllCars().get(index);
-        car.setId(index);
+        Car car = carService.getAllCars().get((int)id);
         model.addAttribute("car", car);
         model.addAttribute("edit", true);
         return "car_edit";

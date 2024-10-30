@@ -5,8 +5,15 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "cars")
 public class Car {
-    private int id = -1;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @Size(min = 7, max = 7, message = "Must be size of 7")
     private String spz;
     @NotBlank

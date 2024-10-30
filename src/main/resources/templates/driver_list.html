@@ -8,7 +8,7 @@
     <a th:href="@{'drivers/create'}">New Driver</a>
   <ul>
       <li th:each="driver, iter: ${drivers}">
-          <a th:href="@{'/drivers/detail/' + ${iter.index}}">
+          <a th:href="@{'/drivers/detail/' + ${iter.id}}">
               <span th:text="${driver.name}"></span>
           </a>
       </li>

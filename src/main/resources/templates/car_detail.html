@@ -5,8 +5,8 @@
     <title>Detail</title>
 </head>
 <body>
-    <a th:href="@{'/cars/edit/' + ${index}}">Edit</a>
-    <a th:href="@{'/cars/delete/' + ${index}}">Delete</a>
+    <a th:href="@{'/cars/edit/' + ${car.id}}">Edit</a>
+    <a th:href="@{'/cars/delete/' + ${car.id}}">Delete</a>
 
     <b>SPZ: </b><span th:text="${car.spz}"></span></br>
     <b>Color: </b><span th:text="${car.color}"></span></br>

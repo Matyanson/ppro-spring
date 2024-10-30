@@ -8,7 +8,7 @@
     <a th:href="@{'/cars/create'}">New Car</a>
   <ul>
       <li th:each="car, iter: ${cars}">
-          <a th:href="@{'/cars/detail/' + ${iter.index}}">
+          <a th:href="@{'/cars/detail/' + ${iter.id}}">
               <span th:text="${car.spz}"></span>
           </a>
       </li>
