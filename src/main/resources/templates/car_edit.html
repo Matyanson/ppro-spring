@@ -6,7 +6,7 @@
 </head>
 <body>
   <form th:action="@{'/cars/save'}" method="post" th:object="${car}">
-      <input type="hidden" th:field="*{getId()}">
+      <input type="hidden" th:field="*{id}">
     SPZ: <input type="text" th:field="*{spz}">
       <span th:errors="*{spz}"></span><br>
     Color: <input type="text" th:field="*{color}">
@@ -17,6 +17,12 @@
       <span th:errors="*{tankVolume}"></span><br>
     Number of seats: <input type="number" th:field="*{numberOfSeats}">
       <span th:errors="*{numberOfSeats}"></span><br>
+    Driver:
+    <select th:field="*{driver}">
+      <option th:each="driver: ${drivers}" th:text="${driver.name}" th:value="${driver.id}">
+
+      </option>
+    </select>
 
       <input type="submit" />
   </form>

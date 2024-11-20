@@ -6,13 +6,22 @@ import jakarta.validation.constraints.NotBlank;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "drivers")
 public class Driver {
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @NotBlank
     private String name;
 
@@ -23,8 +32,17 @@ public class Driver {
     @Min(value = 20000)
     private int salary;
 
+    @OneToMany(mappedBy = "driver")
+    private List<Car> cars;
 
 
+    public void setId(long index) {
+        this.id = index;
+    }
+
+    public long getId() {
+        return id;
+    }
 
     public int getSalary() {
         return salary;
@@ -48,13 +66,5 @@ public class Driver {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setId(int index) {
-        this.id = index;
-    }
-
-    public int getId() {
-        return id;
     }
 }

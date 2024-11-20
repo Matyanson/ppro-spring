@@ -14,23 +14,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/drivers")
 public class DriverController {
     private final DriverService driverService;
-    DriverService DriverService;
 
-    public DriverController(DriverService DriverService, @Qualifier("driverService") DriverService driverService) {
-        this.DriverService = DriverService;
+    public DriverController(DriverService driverService) {
         this.driverService = driverService;
     }
 
     @GetMapping("/")
     public String list(Model model) {
 
-        model.addAttribute("Drivers", DriverService.getAllDrivers());
+        model.addAttribute("Drivers", driverService.getAllDrivers());
         return "driver_list";
     }
 
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable long id) {
-        Driver Driver = DriverService.getDriverById(id);
+        Driver Driver = driverService.getDriverById(id);
         if(Driver == null) return "redirect:/drivers/";
 
         model.addAttribute("Driver", Driver);
@@ -39,15 +37,15 @@ public class DriverController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable long id) {
-        if(id < 0 || id >= DriverService.getAllDrivers().size()) return "redirect:/drivers/";
+        if(id < 0 || id >= driverService.getAllDrivers().size()) return "redirect:/drivers/";
 
-        DriverService.getAllDrivers().remove(id);
+        driverService.getAllDrivers().remove(id);
         return "delete";
     }
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("Driver", new Driver());
+        model.addAttribute("driver", new Driver());
         model.addAttribute("edit", false);
         return "driver_edit";
     }
@@ -64,9 +62,9 @@ public class DriverController {
 
     @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable long id) {
-        if(id < 0 || id >= DriverService.getAllDrivers().size()) return "redirect:/drivers/";
+        if(id < 0 || id >= driverService.getAllDrivers().size()) return "redirect:/drivers/";
 
-        Driver Driver = DriverService.getAllDrivers().get((int)id);
+        Driver Driver = driverService.getAllDrivers().get((int)id);
         model.addAttribute("Driver", Driver);
         model.addAttribute("edit", true);
         return "driver_edit";

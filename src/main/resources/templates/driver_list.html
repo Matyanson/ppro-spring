@@ -5,7 +5,7 @@
     <title>List</title>
 </head>
 <body>
-    <a th:href="@{'drivers/create'}">New Driver</a>
+    <a th:href="@{'/drivers/create'}">New Driver</a>
   <ul>
       <li th:each="driver, iter: ${drivers}">
           <a th:href="@{'/drivers/detail/' + ${iter.id}}">

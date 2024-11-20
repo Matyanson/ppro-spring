@@ -7,13 +7,22 @@ import jakarta.validation.constraints.Size;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "cars")
 public class Car {
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Size(min = 7, max = 7, message = "Must be size of 7")
     private String spz;
     @NotBlank
@@ -28,6 +37,10 @@ public class Car {
     @Max(value = 100)
     private int numberOfSeats;
 
+    @ManyToOne
+    @JoinColumn(name = "driver_id")
+    private Driver driver;
+
     public Car(String spz, String color, String model, float tankVolume, int numberOfSeats) {
         this.id = -1;
         this.spz = spz;
@@ -41,11 +54,11 @@ public class Car {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
