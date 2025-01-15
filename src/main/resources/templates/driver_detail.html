@@ -6,13 +6,17 @@
 </head>
 <body>
     <a th:href="@{'/drivers/edit/' + ${driver.id}}">Edit</a>
-    <a th:href="@{'/drivers/delete/' + ${driver.id}}">Delete</a>
+    <a th:href="@{'/drivers/delete/' + ${driver.id}}">Delete</a></br>
 
-    <b>SPZ: </b><span th:text="${driver.spz}"></span></br>
-    <b>Color: </b><span th:text="${driver.color}"></span></br>
-    <b>Model: </b><span th:text="${driver.model}"></span></br>
-    <b>TankVolume: </b><span th:text="${driver.tankVolume}"></span></br>
-    <b>Number of seats: </b><span th:text="${driver.numberOfSeats}"></span></br>
+    <b>Name: </b><span th:text="${driver.name}"></span></br>
+    <b>Age: </b><span th:text="${driver.age}"></span></br>
+    <b>Salary: </b><span th:text="${driver.salary}"></span></br>
+    <b>Cars: </b></br>
+    <li th:each="car, iter: ${driver.cars}">
+        <a th:href="@{'/cars/detail/' + ${car.id}}">
+            <span th:text="${car.model}"></span>
+        </a>
+    </li>
 
 </body>
 </html>
