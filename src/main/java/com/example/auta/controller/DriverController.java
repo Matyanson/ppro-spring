@@ -22,7 +22,7 @@ public class DriverController {
     @GetMapping("/")
     public String list(Model model) {
 
-        model.addAttribute("Drivers", driverService.getAllDrivers());
+        model.addAttribute("drivers", driverService.getAllDrivers());
         return "driver_list";
     }
 
@@ -31,7 +31,7 @@ public class DriverController {
         Driver Driver = driverService.getDriverById(id);
         if(Driver == null) return "redirect:/drivers/";
 
-        model.addAttribute("Driver", Driver);
+        model.addAttribute("driver", Driver);
         return "driver_detail";
     }
 
@@ -65,7 +65,7 @@ public class DriverController {
         if(id < 0 || id >= driverService.getAllDrivers().size()) return "redirect:/drivers/";
 
         Driver Driver = driverService.getAllDrivers().get((int)id);
-        model.addAttribute("Driver", Driver);
+        model.addAttribute("driver", Driver);
         model.addAttribute("edit", true);
         return "driver_edit";
     }
