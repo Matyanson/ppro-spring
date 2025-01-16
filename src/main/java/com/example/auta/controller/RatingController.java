@@ -27,21 +27,21 @@ public class RatingController {
     @GetMapping("/")
     public String list(Model model) {
         model.addAttribute("ratings", ratingService.getAllRatings());
-        return "rating_list";
+        return "rating/list";
     }
 
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("rating", new Rating());
         model.addAttribute("animeList", animeService.getAllAnime());
-        return "rating_form";
+        return "rating/edit";
     }
 
     @PostMapping("/save")
     public String save(@Valid Rating rating, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("animeList", animeService.getAllAnime());
-            return "rating_form";
+            return "rating/edit";
         }
         ratingService.saveRating(rating);
         return "redirect:/ratings/";

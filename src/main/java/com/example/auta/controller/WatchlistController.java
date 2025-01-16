@@ -27,21 +27,21 @@ public class WatchlistController {
     @GetMapping("/")
     public String list(Model model) {
         model.addAttribute("watchlists", watchlistService.getAllWatchlists());
-        return "watchlist_list";
+        return "watchlist/list";
     }
 
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("watchlist", new Watchlist());
         model.addAttribute("animeList", animeService.getAllAnime());
-        return "watchlist_form";
+        return "watchlist/edit";
     }
 
     @PostMapping("/save")
     public String save(@Valid Watchlist watchlist, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("animeList", animeService.getAllAnime());
-            return "watchlist_form";
+            return "watchlist/edit";
         }
         watchlistService.saveWatchlist(watchlist);
         return "redirect:/watchlists/";

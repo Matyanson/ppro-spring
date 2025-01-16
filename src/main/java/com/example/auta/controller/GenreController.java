@@ -24,19 +24,19 @@ public class GenreController {
     @GetMapping("/")
     public String list(Model model) {
         model.addAttribute("genres", genreService.getAllGenres());
-        return "genre_list";
+        return "genre/list";
     }
 
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("genre", new Genre());
-        return "genre_form";
+        return "genre/edit";
     }
 
     @PostMapping("/save")
     public String save(@Valid Genre genre, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "genre_form";
+            return "genre/edit";
         }
         genreService.saveGenre(genre);
         return "redirect:/genres/";
