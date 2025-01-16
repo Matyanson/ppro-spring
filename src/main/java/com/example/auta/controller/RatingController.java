@@ -24,7 +24,7 @@ public class RatingController {
         this.animeService = animeService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public String list(Model model) {
         model.addAttribute("ratings", ratingService.getAllRatings());
         return "rating/list";

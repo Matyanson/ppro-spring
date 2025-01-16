@@ -1,0 +1,17 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: template('Anime',~{::content})">
+<section th:fragment="content">
+    <h1>User Profile</h1>
+    <div>
+        <p><strong>Username:</strong> <span th:text="${user.username}"></span></p>
+        <p><strong>Password:</strong> <span th:text="${user.password}"></span></p>
+        <p><strong>Role:</strong> <span th:text="${user.role}"></span></p>
+    </div>
+
+    <!-- Only show edit button if the logged-in user is the same as the viewed user -->
+    <div th:if="${canEdit}">
+        <a th:href="@{'/user/edit'}">Edit Profile</a>
+    </div>
+
+    <a href="/">Back to home</a>
+</section>
+</html>

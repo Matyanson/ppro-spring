@@ -22,6 +22,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Watchlist> watchlists;
 
+    public User() {};
+
     public String getUsername() {
         return username;
     }
@@ -54,4 +56,11 @@ public class User {
         this.id = id;
     }
 
+    public List<Watchlist> getWatchlists() {
+        return watchlists;
+    }
+
+    public void setWatchlists(List<Watchlist> watchlists) {
+        this.watchlists = watchlists;
+    }
 }

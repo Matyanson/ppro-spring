@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: template('Anime',~{::content})">
+<section th:fragment="content">
+    <h1>Welcome to your profile page!</h1>
+
+    <!-- Check if the user is logged in -->
+    <div th:if="${#authentication.principal != null}">
+        <p>Redirecting to your profile...</p>
+        <meta http-equiv="refresh" content="2; URL='/profile/index'"/> <!-- Optional redirect after 2 seconds -->
+    </div>
+
+    <div th:if="${#authentication.principal == null}">
+        <p>You need to log in to access your profile. <a href="/login">Login</a></p>
+    </div>
+</section>
+</html>

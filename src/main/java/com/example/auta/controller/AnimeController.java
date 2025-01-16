@@ -24,7 +24,7 @@ public class AnimeController {
         this.genreService = genreService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public String list(Model model) {
         model.addAttribute("animeList", animeService.getAllAnime());
         return "anime/list";

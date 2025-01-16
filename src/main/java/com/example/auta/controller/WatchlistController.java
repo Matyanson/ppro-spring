@@ -24,7 +24,7 @@ public class WatchlistController {
         this.animeService = animeService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public String list(Model model) {
         model.addAttribute("watchlists", watchlistService.getAllWatchlists());
         return "watchlist/list";

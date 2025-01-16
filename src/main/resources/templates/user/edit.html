@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: template('Anime',~{::content})">
+<section th:fragment="content">
+    <h1>Edit Profile</h1>
+    <form th:action="@{'/user/edit'}" th:object="${user}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" th:field="*{username}" disabled />
+        <br/>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" th:field="*{password}" />
+        <br/>
+
+        <label for="role">Role:</label>
+        <input type="text" id="role" th:field="*{role}" />
+        <br/>
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <a th:href="@{'/user/detail/' + ${user.id}}">Back to Profile</a>
+</section>
+</html>
