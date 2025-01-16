@@ -24,7 +24,7 @@ public class CarController {
     public String list(Model model) {
 
         model.addAttribute("cars", carService.getAllCars());
-        return "car_list";
+        return "car/list";
     }
 
     @GetMapping("/detail/{id}")
@@ -33,7 +33,7 @@ public class CarController {
         if(car == null) return "redirect:/cars/";
 
         model.addAttribute("car", car);
-        return "car_detail";
+        return "car/detail";
     }
 
     @GetMapping("/delete/{id}")
@@ -50,7 +50,7 @@ public class CarController {
         model.addAttribute("car", new Car());
         model.addAttribute("edit", false);
         model.addAttribute("drivers", driverService.getAllDrivers());
-        return "car_edit";
+        return "car/edit";
     }
 
     @PostMapping("/save")
@@ -58,7 +58,7 @@ public class CarController {
         if(bindingResult.hasErrors()) {
             model.addAttribute("edit", true);
             model.addAttribute("drivers", driverService.getAllDrivers());
-            return "car_edit";
+            return "car/edit";
         }
         carService.saveCar(car);
         return "redirect:/cars/";
@@ -72,7 +72,7 @@ public class CarController {
         model.addAttribute("car", car);
         model.addAttribute("edit", true);
         model.addAttribute("drivers", driverService.getAllDrivers());
-        return "car_edit";
+        return "car/edit";
     }
 
 }

@@ -1,10 +1,8 @@
 package com.example.auta.controller;
 
-import com.example.auta.model.Car;
 import com.example.auta.model.Driver;
 import com.example.auta.service.DriverService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +21,7 @@ public class DriverController {
     public String list(Model model) {
 
         model.addAttribute("drivers", driverService.getAllDrivers());
-        return "driver_list";
+        return "driver/list";
     }
 
     @GetMapping("/detail/{id}")
@@ -32,7 +30,7 @@ public class DriverController {
         if(Driver == null) return "redirect:/drivers/";
 
         model.addAttribute("driver", Driver);
-        return "driver_detail";
+        return "driver/detail";
     }
 
     @GetMapping("/delete/{id}")
@@ -47,14 +45,14 @@ public class DriverController {
     public String create(Model model) {
         model.addAttribute("driver", new Driver());
         model.addAttribute("edit", false);
-        return "driver_edit";
+        return "driver/edit";
     }
 
     @PostMapping("/save")
     public String save(@Valid Driver driver, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
             model.addAttribute("edit", true);
-            return "driver_edit";
+            return "driver/edit";
         }
         driverService.saveDriver(driver);
         return "redirect:/drivers/";
@@ -67,7 +65,7 @@ public class DriverController {
         Driver Driver = driverService.getAllDrivers().get((int)id);
         model.addAttribute("driver", Driver);
         model.addAttribute("edit", true);
-        return "driver_edit";
+        return "driver/edit";
     }
 
 }
