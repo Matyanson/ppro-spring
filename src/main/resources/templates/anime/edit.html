@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: template('Anime',~{::content})">
+<section th:fragment="content">
+    <h1 th:text="${edit ? 'Edit Anime' : 'Create Anime'}">Edit Anime</h1>
+    <form th:action="@{'/anime/save'}" th:object="${anime}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input id="title" type="text" class="form-control" th:field="*{title}" required/>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" class="form-control" th:field="*{description}" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="episodes" class="form-label">Episodes</label>
+            <input id="episodes" type="number" class="form-control" th:field="*{episodes}" required/>
+        </div>
+        <div class="mb-3">
+            <label for="genres" class="form-label">Genres</label>
+            <select id="genres" multiple class="form-control" th:field="*{genres}" th:each="genre : ${allGenres}">
+                <option th:value="${genre.id}" th:text="${genre.name}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a class="btn btn-secondary" href="/anime/">Cancel</a>
+    </form>
+</section>

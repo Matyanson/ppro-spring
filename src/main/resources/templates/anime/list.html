@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: template('Anime',~{::content})">
+<section th:fragment="content">
+    <h1>Anime List</h1>
+    <a class="btn btn-primary mb-3" href="/anime/create">Add New Anime</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Episodes</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="anime : ${animeList}">
+            <td th:text="${anime.title}"></td>
+            <td th:text="${anime.description}"></td>
+            <td th:text="${anime.episodes}"></td>
+            <td>
+                <a class="btn btn-info btn-sm" th:href="@{/anime/detail/{id}(id=${anime.id})}">Details</a>
+                <a class="btn btn-warning btn-sm" th:href="@{/anime/edit/{id}(id=${anime.id})}">Edit</a>
+                <a class="btn btn-danger btn-sm" th:href="@{/anime/delete/{id}(id=${anime.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</html>

@@ -42,6 +42,7 @@ public class AnimeController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("anime", new Anime());
+        model.addAttribute("edit", false);
         model.addAttribute("genres", genreService.getAllGenres());
         return "anime/edit";
     }
@@ -49,8 +50,9 @@ public class AnimeController {
     @PostMapping("/save")
     public String save(@Valid Anime anime, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("anime", anime);
             model.addAttribute("genres", genreService.getAllGenres());
-            return "anime/edit";
+            return "anime/detail";
         }
         animeService.saveAnime(anime);
         return "redirect:/anime/";
@@ -62,6 +64,7 @@ public class AnimeController {
         if (anime == null) return "redirect:/anime/";
 
         model.addAttribute("anime", anime);
+        model.addAttribute("edit", true);
         model.addAttribute("genres", genreService.getAllGenres());
         return "anime/edit";
     }
