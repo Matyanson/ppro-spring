@@ -2,17 +2,25 @@ package com.example.auta.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "users")
 public class User {
-    @Id
 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
     private String role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Rating> ratings;
+
+    @OneToMany(mappedBy = "user")
+    private List<Watchlist> watchlists;
 
     public String getUsername() {
         return username;

@@ -23,6 +23,10 @@ public class Rating {
     @JoinColumn(name = "anime_id")
     private Anime anime;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Rating() {}
 
     public Rating(int score, Anime anime) {

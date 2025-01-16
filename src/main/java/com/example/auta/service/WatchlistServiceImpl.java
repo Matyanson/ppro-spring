@@ -1,38 +1,34 @@
 package com.example.auta.service;
 
-import com.example.auta.model.Anime;
-import com.example.auta.repository.AnimeRepository;
+import com.example.auta.model.Watchlist;
+import com.example.auta.repository.WatchlistRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class WatchlistServiceImpl implements AnimeService {
+public class WatchlistServiceImpl implements WatchlistService {
 
-    private final AnimeRepository animeRepository;
+    private final WatchlistRepository watchlistRepository;
 
-    public WatchlistServiceImpl(AnimeRepository animeRepository) {
-        this.animeRepository = animeRepository;
+    public WatchlistServiceImpl(WatchlistRepository watchlistRepository) {
+        this.watchlistRepository = watchlistRepository;
     }
 
     @Override
-    public List<Anime> getAllAnime() {
-        return animeRepository.findAll();
+    public List<Watchlist> getAllWatchlists() {
+        return watchlistRepository.findAll();
     }
 
     @Override
-    public Anime getAnimeById(long id) {
-        return animeRepository.findById(id).orElse(null);
+    public void saveWatchlist(Watchlist watchlist) {
+        watchlistRepository.save(watchlist);
     }
 
     @Override
-    public void saveAnime(Anime anime) {
-        animeRepository.save(anime);
-    }
-
-    @Override
-    public void deleteAnime(long id) {
-        animeRepository.deleteById(id);
+    public void deleteWatchlist(long id) {
+        watchlistRepository.deleteById(id);
     }
 }
+
 

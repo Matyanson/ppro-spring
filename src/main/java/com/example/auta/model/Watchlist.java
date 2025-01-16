@@ -17,6 +17,10 @@ public class Watchlist {
 
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @ManyToMany
     @JoinTable(
             name = "watchlist_anime",
