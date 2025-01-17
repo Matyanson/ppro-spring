@@ -1,8 +1,10 @@
 package com.example.auta.controller;
 
 import com.example.auta.model.Anime;
+import com.example.auta.model.User;
 import com.example.auta.model.Watchlist;
 import com.example.auta.service.AnimeService;
+import com.example.auta.service.UserService;
 import com.example.auta.service.WatchlistService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -21,15 +24,18 @@ public class WatchlistController {
 
     private final WatchlistService watchlistService;
     private final AnimeService animeService;
+    private final UserService userService;
 
-    public WatchlistController(WatchlistService watchlistService, AnimeService animeService) {
+    public WatchlistController(WatchlistService watchlistService, AnimeService animeService, UserService userService) {
         this.watchlistService = watchlistService;
         this.animeService = animeService;
+        this.userService = userService;
     }
 
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("watchlists", watchlistService.getAllWatchlists());
+    public String list(Model model, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        model.addAttribute("watchlists", watchlistService.getAllWatchlistsByUser(user));
         return "watchlist/list";
     }
 
@@ -50,13 +56,14 @@ public class WatchlistController {
     }
 
     @PostMapping("/save")
-    public String save(@Valid Watchlist watchlist, BindingResult bindingResult, Model model) {
+    public String save(@Valid Watchlist watchlist, BindingResult bindingResult, Model model, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
         if (bindingResult.hasErrors()) {
             model.addAttribute("watchlist", new Watchlist());
             model.addAttribute("edit", false);
             return "watchlist/edit";
         }
-        watchlistService.saveWatchlist(watchlist);
+        watchlistService.saveWatchlist(watchlist, user);
         return "redirect:/watchlist";
     }
 

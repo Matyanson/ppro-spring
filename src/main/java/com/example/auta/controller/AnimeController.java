@@ -3,10 +3,8 @@ package com.example.auta.controller;
 import com.example.auta.model.Anime;
 import com.example.auta.model.Rating;
 import com.example.auta.model.User;
-import com.example.auta.service.AnimeService;
-import com.example.auta.service.GenreService;
-import com.example.auta.service.RatingService;
-import com.example.auta.service.UserService;
+import com.example.auta.model.Watchlist;
+import com.example.auta.service.*;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/anime")
@@ -24,12 +23,14 @@ public class AnimeController {
     private final GenreService genreService;
     private final UserService userService;
     private final RatingService ratingService;
+    private final WatchlistService watchlistService;
 
-    public AnimeController(AnimeService animeService, GenreService genreService, UserService userService, RatingService ratingService) {
+    public AnimeController(AnimeService animeService, GenreService genreService, UserService userService, RatingService ratingService, WatchlistService watchlistService) {
         this.animeService = animeService;
         this.genreService = genreService;
         this.userService = userService;
         this.ratingService = ratingService;
+        this.watchlistService = watchlistService;
     }
 
     @GetMapping
@@ -48,7 +49,8 @@ public class AnimeController {
         User user = userService.findByUsername(principal.getName());
         Rating userRating = ratingService.getRatingByAnimeAndUser(anime, user);
         Double averageRating = animeService.getAnimeAverageRating(anime);
-        if (anime == null) return "redirect:/anime/";
+        List<Watchlist> lists = watchlistService.getAllWatchlistsByUser(user);
+        if (anime == null) return "redirect:/anime";
 
         // Handle case where there are no ratings yet
         if (averageRating == null) {
@@ -58,7 +60,8 @@ public class AnimeController {
         model.addAttribute("anime", anime);
         model.addAttribute("averageRating", averageRating);
         model.addAttribute("userRating", userRating != null ? userRating.getScore() : 0);
-        return "anime/detail";
+        model.addAttribute("userWatchlists", lists);
+        return "/anime/detail";
     }
 
     @PostMapping("/rate/{id}")
@@ -83,6 +86,25 @@ public class AnimeController {
 
         redirectAttributes.addFlashAttribute("message", "Your rating has been submitted!");
         return "redirect:/anime/detail/{id}";
+    }
+
+    @PostMapping("/addToWatchlist")
+    public String addToWatchlist(
+            @RequestParam("animeId") Long animeId,
+            @RequestParam("watchlistId") Long watchlistId,
+            Principal principal
+    ) {
+        // Get the current user
+        User user = userService.findByUsername(principal.getName());
+
+        // Get the anime and watchlist
+        Anime anime = animeService.getAnimeById(animeId);
+        Watchlist watchlist = watchlistService.getWatchlistById(watchlistId);
+
+        // Add the anime to the watchlist
+        watchlistService.addAnimeToWatchlist(watchlist, anime);
+
+        return "redirect:/anime/detail/" + animeId; // Redirect back to the anime details page
     }
 
     @GetMapping("/create")

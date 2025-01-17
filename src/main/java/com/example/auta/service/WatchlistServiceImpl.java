@@ -1,5 +1,7 @@
 package com.example.auta.service;
 
+import com.example.auta.model.Anime;
+import com.example.auta.model.User;
 import com.example.auta.model.Watchlist;
 import com.example.auta.repository.WatchlistRepository;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,21 @@ public class WatchlistServiceImpl implements WatchlistService {
     }
 
     @Override
-    public void saveWatchlist(Watchlist watchlist) {
+    public List<Watchlist> getAllWatchlistsByUser(User user) {
+        return watchlistRepository.findByUser(user);
+    }
+
+    @Override
+    public void addAnimeToWatchlist(Watchlist watchlist, Anime anime) {
+        if (!watchlist.getAnimeList().contains(anime)) {
+            watchlist.getAnimeList().add(anime);
+            watchlistRepository.save(watchlist);
+        }
+    }
+
+    @Override
+    public void saveWatchlist(Watchlist watchlist, User user) {
+        watchlist.setUser(user);
         watchlistRepository.save(watchlist);
     }
 

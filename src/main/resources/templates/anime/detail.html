@@ -28,6 +28,21 @@
         <button type="submit" class="btn btn-primary mt-2">Submit Rating</button>
     </form>
 
+    <div th:if="${userWatchlists != null}">
+        <form th:action="@{/anime/addToWatchlist}" method="post">
+            <input type="hidden" th:name="animeId" th:value="${anime.id}"/>
+            <div class="form-group">
+                <label for="watchlist">Select Watchlist</label>
+                <select class="form-control" th:name="watchlistId" id="watchlist">
+                    <option th:each="watchlist : ${userWatchlists}"
+                            th:value="${watchlist.id}"
+                            th:text="${watchlist.name}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add to Watchlist</button>
+        </form>
+    </div>
+
     <a class="btn btn-secondary" href="/anime">Back to List</a>
     <style>
         .star-rating {
