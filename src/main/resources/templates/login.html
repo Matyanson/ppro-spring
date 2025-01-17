@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: template('Login',~{::content})">
+<section th:fragment="content">
+    <div class="container mt-5">
+        <h1>Login</h1>
+        <form th:action="@{/login}" method="post">
+            <div class="mb-3">
+                <label class="form-label" for="username">Username:</label>
+                <input type="text" id="username" name="username" class="form-control" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="password">Password:</label>
+                <input type="password" id="password" name="password" class="form-control" required />
+            </div>
+            <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+
+        <a href="/user/create">Go to Register</a>
+
+        <!-- Error message on login failure -->
+        <div th:if="${param.error}" style="color: red;">
+            Invalid username or password.
+        </div>
+
+        <!-- Logout message -->
+        <div th:if="${param.logout}" style="color: green;">
+            You have been logged out successfully.
+        </div>
+    </div>
+</section>
+</html>

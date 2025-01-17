@@ -33,14 +33,16 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user/create", "/register").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults())
-                /*.formLogin((form) -> form
+                .formLogin((form) -> form
                         .loginPage("/login") // Custom login page
                         .loginProcessingUrl("/login") // Form submission URL
-                        .defaultSuccessUrl("/", true)
-                        .permitAll())*/
+                        .defaultSuccessUrl("/", true) // Redirect to homepage after login
+                        .failureUrl("/login?error") // Redirect on login failure
+                        .permitAll()
+                )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")

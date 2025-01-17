@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: template('Register',~{::content})">
+<section th:fragment="content">
+    <div class="container mt-5">
+        <h1>Register</h1>
+
+        <form th:action="@{/user/create}" th:object="${user}" method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" class="form-control" th:field="*{username}" required>
+                <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" class="form-control" th:field="*{password}" required>
+                <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+
+        <div th:if="${successMessage}" class="alert alert-success mt-3" th:text="${successMessage}"></div>
+    </div>
+</section>
+</html>

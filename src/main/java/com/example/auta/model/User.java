@@ -3,6 +3,7 @@ package com.example.auta.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -14,9 +15,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "Username cannot be blank")
+    @NotBlank(message = "Username is required")
+    @Size(min = 4, max = 20, message = "Username must be between 4 and 20 characters")
     private String username;
-    @NotBlank(message = "Password cannot be blank")
+    @NotBlank(message = "Password is required")
+    @Size(min = 5, message = "Password must be at least 5 characters long")
     private String password;
     private String role;
 
