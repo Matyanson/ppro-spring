@@ -1,5 +1,6 @@
 package com.example.auta.controller;
 
+import com.example.auta.model.Anime;
 import com.example.auta.model.Watchlist;
 import com.example.auta.service.AnimeService;
 import com.example.auta.service.WatchlistService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/watchlist")
@@ -28,6 +31,15 @@ public class WatchlistController {
     public String list(Model model) {
         model.addAttribute("watchlists", watchlistService.getAllWatchlists());
         return "watchlist/list";
+    }
+
+    @GetMapping("/detail/{id}")
+    public String list(Model model, @PathVariable long id) {
+        Watchlist list = watchlistService.getWatchlistById(id);
+        List<Anime> animeList = list.getAnimeList();
+        model.addAttribute("watchlist", list);
+        model.addAttribute("animeList", animeList);
+        return "watchlist/detail";
     }
 
     @GetMapping("/create")

@@ -1,12 +1,27 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: template('Anime',~{::content})">
 <section th:fragment="content">
-    <h1 th:text="${anime.title}">Anime Title</h1>
-    <p><strong>Description:</strong> <span th:text="${anime.description}"></span></p>
-    <p><strong>Episodes:</strong> <span th:text="${anime.episodes}"></span></p>
-    <p><strong>Genres:</strong>
-        <span th:each="genre : ${anime.genres}">
-                <span th:text="${genre.name}"></span>,
-            </span>
-    </p>
-    <a class="btn btn-secondary" href="/anime/">Back to List</a>
+    <h1 th:text="${watchlist.name}">Watchlist Title</h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Episodes</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="anime : ${animeList}">
+            <td th:text="${anime.title}"></td>
+            <td th:text="${anime.description}"></td>
+            <td th:text="${anime.episodes}"></td>
+            <td>
+                <a class="btn btn-info btn-sm" th:href="@{/anime/detail/{id}(id=${anime.id})}">Details</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary" href="/watchlist">Back to Lists</a>
 </section>

@@ -29,6 +29,11 @@ public class WatchlistServiceImpl implements WatchlistService {
     public void deleteWatchlist(long id) {
         watchlistRepository.deleteById(id);
     }
+
+    @Override
+    public Watchlist getWatchlistById(long id) {
+        return watchlistRepository.findById(id);
+    }
 }
 
 

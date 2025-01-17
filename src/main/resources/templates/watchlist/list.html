@@ -14,6 +14,7 @@
         <tr th:each="watchlist : ${watchlists}">
             <td th:text="${watchlist.name}"></td>
             <td>
+                <a class="btn btn-info btn-sm" th:href="@{/watchlist/detail/{id}(id=${watchlist.id})}">Details</a>
                 <a class="btn btn-danger btn-sm" th:href="@{/watchlist/delete/{id}(id=${watchlist.id})}">Delete</a>
             </td>
         </tr>
