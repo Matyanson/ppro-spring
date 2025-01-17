@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: template('Genres',~{::content})">
+<section th:fragment="content">
+    <h1>Genre List</h1>
+    <a class="btn btn-primary mb-3" href="/genres/create">Add New Genre</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="genre : ${genres}">
+            <td th:text="${genre.name}"></td>
+            <td>
+                <a class="btn btn-danger btn-sm" th:href="@{/genres/delete/{id}(id=${genre.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</html>

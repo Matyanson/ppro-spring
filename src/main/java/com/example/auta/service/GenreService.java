@@ -10,4 +10,5 @@ public interface GenreService {
     List<Genre> getAllGenres();
     void saveGenre(Genre genre);
     void deleteGenre(long id);
+    boolean existsByName(String name);
 }

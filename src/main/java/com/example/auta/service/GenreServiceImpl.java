@@ -29,4 +29,8 @@ public class GenreServiceImpl implements GenreService {
     public void deleteGenre(long id) {
         genreRepository.deleteById(id);
     }
+
+    public boolean existsByName(String name) {
+        return genreRepository.existsByName(name);  // Assuming you have a repository method for this
+    }
 }
