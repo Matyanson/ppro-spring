@@ -18,11 +18,11 @@
         </div>
         <div class="mb-3">
             <label for="genres" class="form-label">Genres</label>
-            <select id="genres" multiple class="form-control" th:field="*{genres}" th:each="genre : ${allGenres}">
-                <option th:value="${genre.id}" th:text="${genre.name}"></option>
+            <select id="genres" multiple class="form-control" th:field="*{genres}">
+                <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.name}"></option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Save</button>
-        <a class="btn btn-secondary" href="/anime/">Cancel</a>
+        <a class="btn btn-secondary" href="/anime">Cancel</a>
     </form>
 </section>

@@ -9,6 +9,7 @@ import java.util.List;
 public interface AnimeService {
     List<Anime> getAllAnime();
     Anime getAnimeById(long id);
+    Double getAnimeAverageRating(Anime anime);
     void saveAnime(Anime anime);
     void deleteAnime(long id);
 }

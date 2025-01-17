@@ -2,6 +2,7 @@ package com.example.auta.service;
 
 import com.example.auta.model.Anime;
 import com.example.auta.repository.AnimeRepository;
+import com.example.auta.repository.RatingRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +11,11 @@ import java.util.List;
 public class AnimeServiceImpl implements AnimeService {
 
     private final AnimeRepository animeRepository;
+    private final RatingRepository ratingRepository;
 
-    public AnimeServiceImpl(AnimeRepository animeRepository) {
+    public AnimeServiceImpl(AnimeRepository animeRepository, RatingRepository ratingRepository) {
         this.animeRepository = animeRepository;
+        this.ratingRepository = ratingRepository;
     }
 
     @Override
@@ -23,6 +26,11 @@ public class AnimeServiceImpl implements AnimeService {
     @Override
     public Anime getAnimeById(long id) {
         return animeRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Double getAnimeAverageRating(Anime anime) {
+        return ratingRepository.findAverageRatingByAnime(anime);
     }
 
     @Override

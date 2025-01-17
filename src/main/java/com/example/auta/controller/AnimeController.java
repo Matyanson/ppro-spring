@@ -33,9 +33,16 @@ public class AnimeController {
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable long id) {
         Anime anime = animeService.getAnimeById(id);
+        Double averageRating = animeService.getAnimeAverageRating(anime);
         if (anime == null) return "redirect:/anime/";
 
+        // Handle case where there are no ratings yet
+        if (averageRating == null) {
+            averageRating = 0.0;
+        }
+
         model.addAttribute("anime", anime);
+        model.addAttribute("averageRating", averageRating);
         return "anime/detail";
     }
 
@@ -55,13 +62,13 @@ public class AnimeController {
             return "anime/detail";
         }
         animeService.saveAnime(anime);
-        return "redirect:/anime/";
+        return "redirect:/anime";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable long id) {
         Anime anime = animeService.getAnimeById(id);
-        if (anime == null) return "redirect:/anime/";
+        if (anime == null) return "redirect:/anime";
 
         model.addAttribute("anime", anime);
         model.addAttribute("edit", true);
@@ -72,6 +79,6 @@ public class AnimeController {
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable long id) {
         animeService.deleteAnime(id);
-        return "redirect:/anime/";
+        return "redirect:/anime";
     }
 }
