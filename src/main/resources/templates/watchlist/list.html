@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: template('Genres',~{::content})">
+<section th:fragment="content">
+    <h1>Watch Lists</h1>
+    <a class="btn btn-primary mb-3" href="/watchlist/create">Add New List</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="watchlist : ${watchlists}">
+            <td th:text="${watchlist.name}"></td>
+            <td>
+                <a class="btn btn-danger btn-sm" th:href="@{/watchlist/delete/{id}(id=${watchlist.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</html>

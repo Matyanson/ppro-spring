@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: template('Genre - Edit',~{::content})">
+<section th:fragment="content">
+    <h1 th:text="${edit ? 'Edit Watchlist' : 'Create new Watchlist'}">Create new Watchlist</h1>
+
+    <form th:action="${edit ? '/watchlist/update' : '/watchlist/save'}" th:object="${watchlist}" method="post">
+        <!-- Display general form errors -->
+        <div th:if="${#fields.hasErrors()}" class="alert alert-danger">
+            <ul>
+                <li th:each="err : ${#fields.errors('')}" th:text="${err}"></li>
+            </ul>
+        </div>
+
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-group">
+            <label for="name" class="form-label">Name</label>
+            <input id="name" type="text" class="form-control" th:field="*{name}" required />
+            <!-- Display error for name field -->
+            <div th:if="${#fields.hasErrors('name')}" class="text-danger">
+                <span th:each="err : ${#fields.errors('name')}" th:text="${err}"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a class="btn btn-secondary" href="/genres">Cancel</a>
+    </form>
+</section>
+</html>

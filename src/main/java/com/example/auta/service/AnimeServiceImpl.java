@@ -5,6 +5,7 @@ import com.example.auta.repository.AnimeRepository;
 import com.example.auta.repository.RatingRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service

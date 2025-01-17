@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/watchlists")
+@RequestMapping("/watchlist")
 public class WatchlistController {
 
     private final WatchlistService watchlistService;
@@ -33,23 +33,24 @@ public class WatchlistController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("watchlist", new Watchlist());
-        model.addAttribute("animeList", animeService.getAllAnime());
+        model.addAttribute("edit", false);
         return "watchlist/edit";
     }
 
     @PostMapping("/save")
     public String save(@Valid Watchlist watchlist, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("animeList", animeService.getAllAnime());
+            model.addAttribute("watchlist", new Watchlist());
+            model.addAttribute("edit", false);
             return "watchlist/edit";
         }
         watchlistService.saveWatchlist(watchlist);
-        return "redirect:/watchlists/";
+        return "redirect:/watchlist";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable long id) {
         watchlistService.deleteWatchlist(id);
-        return "redirect:/watchlists/";
+        return "redirect:/watchlist";
     }
 }
