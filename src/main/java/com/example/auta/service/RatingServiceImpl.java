@@ -1,6 +1,8 @@
 package com.example.auta.service;
 
+import com.example.auta.model.Anime;
 import com.example.auta.model.Rating;
+import com.example.auta.model.User;
 import com.example.auta.repository.RatingRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,11 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public void deleteRating(long id) {
         ratingRepository.deleteById(id);
+    }
+
+    @Override
+    public Rating getRatingByAnimeAndUser(Anime anime, User user) {
+        return ratingRepository.findByAnimeAndUser(anime, user);
     }
 }
 

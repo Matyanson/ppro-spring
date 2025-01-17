@@ -1,16 +1,20 @@
 package com.example.auta.controller;
 
 import com.example.auta.model.Anime;
+import com.example.auta.model.Rating;
+import com.example.auta.model.User;
 import com.example.auta.service.AnimeService;
 import com.example.auta.service.GenreService;
+import com.example.auta.service.RatingService;
+import com.example.auta.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/anime")
@@ -18,10 +22,14 @@ public class AnimeController {
 
     private final AnimeService animeService;
     private final GenreService genreService;
+    private final UserService userService;
+    private final RatingService ratingService;
 
-    public AnimeController(AnimeService animeService, GenreService genreService) {
+    public AnimeController(AnimeService animeService, GenreService genreService, UserService userService, RatingService ratingService) {
         this.animeService = animeService;
         this.genreService = genreService;
+        this.userService = userService;
+        this.ratingService = ratingService;
     }
 
     @GetMapping
@@ -31,8 +39,14 @@ public class AnimeController {
     }
 
     @GetMapping("/detail/{id}")
-    public String detail(Model model, @PathVariable long id) {
+    public String detail(
+            Model model,
+            @PathVariable long id,
+            Principal principal
+    ) {
         Anime anime = animeService.getAnimeById(id);
+        User user = userService.findByUsername(principal.getName());
+        Rating userRating = ratingService.getRatingByAnimeAndUser(anime, user);
         Double averageRating = animeService.getAnimeAverageRating(anime);
         if (anime == null) return "redirect:/anime/";
 
@@ -43,7 +57,32 @@ public class AnimeController {
 
         model.addAttribute("anime", anime);
         model.addAttribute("averageRating", averageRating);
+        model.addAttribute("userRating", userRating != null ? userRating.getScore() : 0);
         return "anime/detail";
+    }
+
+    @PostMapping("/rate/{id}")
+    public String rateAnime(@PathVariable Long id, @RequestParam("score") int score, Principal principal, RedirectAttributes redirectAttributes) {
+        Anime anime = animeService.getAnimeById(id);
+        User user = userService.findByUsername(principal.getName());
+
+        // Check if the user has already rated this anime
+        Rating existingRating = ratingService.getRatingByAnimeAndUser(anime, user);
+        if (existingRating != null) {
+            // Update the existing rating
+            existingRating.setScore(score);
+            ratingService.saveRating(existingRating);
+        } else {
+            // Create a new rating
+            Rating newRating = new Rating();
+            newRating.setScore(score);
+            newRating.setAnime(anime);
+            newRating.setUser(user);
+            ratingService.saveRating(newRating);
+        }
+
+        redirectAttributes.addFlashAttribute("message", "Your rating has been submitted!");
+        return "redirect:/anime/detail/{id}";
     }
 
     @GetMapping("/create")

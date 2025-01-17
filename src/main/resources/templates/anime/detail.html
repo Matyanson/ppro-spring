@@ -9,5 +9,47 @@
             </span>
     </p>
     <p><strong>Average Rating:</strong> <span th:text="${averageRating}"></span></p>
+
+    <!-- Star Rating Form -->
+    <h3>Rate this Anime</h3>
+    <form th:action="@{/anime/rate/{id}(id=${anime.id})}" method="post">
+        <div class="star-rating">
+            <input type="radio" id="star10" name="score" value="10" th:checked="${userRating == 10}" /><label for="star10">★</label>
+            <input type="radio" id="star9" name="score" value="9" th:checked="${userRating == 9}" /><label for="star9">★</label>
+            <input type="radio" id="star8" name="score" value="8" th:checked="${userRating == 8}" /><label for="star8">★</label>
+            <input type="radio" id="star7" name="score" value="7" th:checked="${userRating == 7}" /><label for="star7">★</label>
+            <input type="radio" id="star6" name="score" value="6" th:checked="${userRating == 6}" /><label for="star6">★</label>
+            <input type="radio" id="star5" name="score" value="5" th:checked="${userRating == 5}" /><label for="star5">★</label>
+            <input type="radio" id="star4" name="score" value="4" th:checked="${userRating == 4}" /><label for="star4">★</label>
+            <input type="radio" id="star3" name="score" value="3" th:checked="${userRating == 3}" /><label for="star3">★</label>
+            <input type="radio" id="star2" name="score" value="2" th:checked="${userRating == 2}" /><label for="star2">★</label>
+            <input type="radio" id="star1" name="score" value="1" th:checked="${userRating == 1}" /><label for="star1">★</label>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Submit Rating</button>
+    </form>
+
     <a class="btn btn-secondary" href="/anime">Back to List</a>
+    <style>
+        .star-rating {
+            direction: rtl;
+            display: inline-block;
+            font-size: 2em;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            color: #ddd;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: gold;
+        }
+    </style>
 </section>
