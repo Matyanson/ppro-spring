@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: template('Anime',~{::content})">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: template('User',~{::content})">
 <section th:fragment="content">
     <h1>User Profile</h1>
     <div>
@@ -9,7 +9,7 @@
 
     <!-- Only show edit button if the logged-in user is the same as the viewed user -->
     <div th:if="${canEdit}">
-        <a th:href="@{'/user/edit'}">Edit Profile</a>
+        <a th:href="${'/user/edit'}">Edit Profile</a>
     </div>
 
     <a href="/">Back to home</a>

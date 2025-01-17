@@ -68,7 +68,9 @@ public class UserController {
 
         // Update user details (e.g., username cannot be changed, just other fields)
         currentUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        currentUser.setRole(user.getRole());
+        // Update role only if admin is logged in
+        if(currentUser.getRole() == "ADMIN")
+            currentUser.setRole(user.getRole());
 
         userService.save(currentUser); // Save the updated user
 

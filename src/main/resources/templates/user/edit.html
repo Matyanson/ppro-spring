@@ -2,21 +2,38 @@
 <section th:fragment="content">
     <h1>Edit Profile</h1>
     <form th:action="@{'/user/edit'}" th:object="${user}" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" th:field="*{username}" disabled />
-        <br/>
+        <!-- Username field (disabled) -->
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" th:field="*{username}" class="form-control" />
+            <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+        </div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" th:field="*{password}" />
-        <br/>
+        <!-- Password field -->
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" th:field="*{password}" class="form-control" />
+            <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        </div>
 
-        <label for="role">Role:</label>
-        <input type="text" id="role" th:field="*{role}" />
-        <br/>
+        <!-- Role field (disabled if necessary) -->
+        <div class="form-group">
+            <label for="role">Role:</label>
+            <select id="role" th:field="*{role}" class="form-control"
+                    th:attr="disabled=${user.role != 'ADMIN'}">
+                <option value="ADMIN" th:selected="${user.role == 'ADMIN'}">ADMIN</option>
+                <option value="MODERATOR" th:selected="${user.role == 'MODERATOR'}">MODERATOR</option>
+                <option value="USER" th:selected="${user.role == 'USER'}">USER</option>
+            </select>
+            <div class="text-danger" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
+        </div>
 
-        <button type="submit">Save Changes</button>
+        <!-- Submit Button -->
+        </br>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
 
-    <a th:href="@{'/user/detail/' + ${user.id}}">Back to Profile</a>
+    <!-- Back to profile link -->
+    <a th:href="@{'/user/detail/' + ${user.id}}" class="btn btn-secondary mt-3">Back to Profile</a>
 </section>
 </html>
